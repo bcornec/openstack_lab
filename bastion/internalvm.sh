@@ -1,6 +1,6 @@
 #!/bin/bash
 
-openstack server create --flavor m1.small --image "Debian Jessie 64-bit" --key-name bastionkey internalvm
+openstack server create --flavor m1.small --image "Debian Jessie 64-bit" --key-name bastionkey --nic net-id=private internalvm
 vmip=""
 
 while [ -z "$vmip" ]
