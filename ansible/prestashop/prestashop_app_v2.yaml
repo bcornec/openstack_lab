@@ -7,7 +7,7 @@
 
   vars:
     - stackname: "psstack"
-    - consulip: "10.10.0.3"
+    - consulip: "10.10.0.5"
     - consulport: "8500"
   
   roles:
@@ -19,7 +19,7 @@
 
   vars:
     - stackname: "psstack"
-    - consulip: "10.10.0.3"
+    - consulip: "10.10.0.5"
     - consulport: "8500"
   
   roles:
