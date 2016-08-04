@@ -123,6 +123,7 @@
   shell: echo $(openstack stack output show psstack server1_public_ip -f json | jq ."output_value" | sed 's/"//g'):5000
   register: publicurl
   delegate_to: localhost
+  become_user: cloud
   when: dbinit.changed
 
 - name: Patch dump with forced public url

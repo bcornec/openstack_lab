@@ -7,6 +7,7 @@
 - name: Get number of web server
   shell : openstack stack output show {{ stackname }} asg_size -f json | jq ."output_value"
   delegate_to: localhost
+  become_user: cloud
   register: webnb
 
 - name: Configure haproxy deploy configuration file template
