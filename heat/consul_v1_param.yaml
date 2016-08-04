@@ -3,4 +3,4 @@ parameters:
   image: Debian Jessie 64-bit
   flavor: m1.small
   public_net: public
-  dnslist: [ "10.3.222.22" ]
+  dnslist: [ "10.3.156.3" ]

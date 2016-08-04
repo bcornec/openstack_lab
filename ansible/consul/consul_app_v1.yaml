@@ -14,7 +14,7 @@
  
   tasks:
     - name: Install unzip
-      apt: name="unzip" state="present"
+      apt: name="unzip" state="present" update_cache=yes
 
     - name: Install dig
       apt: name="dnsutils" state="present"

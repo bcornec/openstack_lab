@@ -5,4 +5,4 @@ parameters:
   flavorweb: m1.small
   flavordb: m1.medium
   public_net: public
-  dnslist: [ "10.10.0.3" ]
+  dnslist: [ "10.10.0.5" ]
