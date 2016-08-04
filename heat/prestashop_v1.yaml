@@ -77,7 +77,7 @@ resources:
   router_interface:
     type: OS::Neutron::RouterInterface
     properties:
-      router_id: "router1"
+      router_id: "f3bb6855-e5f9-43f3-a5db-9755841b61a4"
       subnet_id: { get_resource: private_subnet }
 
   server1:
