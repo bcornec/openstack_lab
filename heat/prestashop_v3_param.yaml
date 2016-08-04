@@ -4,5 +4,5 @@ parameters:
   imagedb: CentOS 6
   flavorweb: m1.small
   flavordb: m1.medium
-  public_net: public
+  public_net: ext-net
   dnslist: [ "10.10.0.5" ]
