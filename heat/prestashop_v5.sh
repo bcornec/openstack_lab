@@ -33,7 +33,7 @@ consul_scid=$(openstack security group show consulstack -f json | jq .id | sed '
 openstack volume list | grep -q "$stackname"
 if [ $? != 0 ]
 then
-	openstack volume create "$stackname" --size 2
+	openstack volume create "$stackname" --size 2 --type "3PARGold"
 	sleep 30s
 fi
 
