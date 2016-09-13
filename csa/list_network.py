@@ -88,10 +88,10 @@ root = ET.Element('Property')
 for subnet in sorted(avail_subnets - user_subnets, key=sort_sub):
     av = ET.SubElement(root, 'availableValues')
     dp = ET.SubElement(av, 'displayName')
-    dp.text = "Subnet"
+    dp.text = "Subnet: {}".format(subnet)
     desc = ET.SubElement(av, 'description')
     val = ET.SubElement(av, 'value')
-    val.text = subnet
+    val.text = "{}:psstack{}".format(subnet, sort_sub(subnet))
 
 # Show output xml
 print(prettify(root))
