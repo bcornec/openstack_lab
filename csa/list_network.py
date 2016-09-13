@@ -11,10 +11,8 @@ Description: Short script to list available openstack network subnets
 """
 
 
-import json
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
-import subprocess
 import os
 import sys
 import re
@@ -30,64 +28,10 @@ def prettify(elem):
     reparsed = minidom.parseString(rough_string)
     return reparsed.toprettyxml(indent="\t")
 
-def get_command(repo, image):
-    image = repo + '/' + image
-    with open(os.devnull, 'w') as FNULL:
-        subprocess.check_call(["docker",
-                               "pull",
-                               image], stdout=FNULL)
-    inspect = subprocess.check_output(["docker",
-                                       "inspect",
-                                       image])
-    inspect = json.loads(inspect)
-    command = ''
-    command = str(inspect[0]['Config']["Cmd"])
-    if command is None:
-        command=str('empty')
-    else:
-        command = command.replace('[u\'', '')
-        command = command.replace('\']', '')
-        command = command.replace('\', u\'run', '')
-    return command
 
-def get_volumes(repo, image):
-    image = repo + '/' + image
-    with open(os.devnull, 'w') as FNULL:
-        subprocess.check_call(["docker",
-                               "pull",
-                               image], stdout=FNULL)
-    inspect = subprocess.check_output(["docker",
-                                       "inspect",
-                                       image])
-    inspect = json.loads(inspect)
-    volumes = ''
-    volumes = str(inspect[0]['Config']["Volumes"])
-    if volumes is None:
-        volumes=str('empty')
-    else:
-        volumes = volumes.replace('{u\'', '')
-        volumes = volumes.replace('\': {}}', '')
-    return volumes
-
-def get_port(repo, image):
-    image = repo + '/' + image
-    with open(os.devnull, 'w') as FNULL:
-        subprocess.check_call(["docker",
-                               "pull",
-                               image], stdout=FNULL)
-    inspect = subprocess.check_output(["docker",
-                                       "inspect",
-                                       image])
-    inspect = json.loads(inspect)
-    port = ''
-    try:
-        port = inspect[0]['Config']["ExposedPorts"].keys()
-        port = sorted(port)
-        port = port[0].replace('/tcp', '')
-    except KeyError:
-        # Uggla hack to specify a port
-        port = '35000'
-    return port
+def sort_sub(subnet):
+    subportion = re.match(r'\d+\.1\.(\d+)\.\d+', subnet)
+    return int(subportion.group(1))
 
 ########################################################
 # Main
@@ -141,14 +85,16 @@ user_subnets = set(user_subnets)
 # Create xml
 root = ET.Element('Property')
 
-for subnets in (avail_subnets - user_subnets):
+for subnet in sorted(avail_subnets - user_subnets, key=sort_sub):
     av = ET.SubElement(root, 'availableValues')
     dp = ET.SubElement(av, 'displayName')
     dp.text = "Subnet"
     desc = ET.SubElement(av, 'description')
     val = ET.SubElement(av, 'value')
-    val.text = subnets
+    val.text = subnet
+
 # Show output xml
 print(prettify(root))
+
 
 sys.exit(0)
