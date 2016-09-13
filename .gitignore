@@ -5,3 +5,4 @@ tmp
 *.pyc
 *.swo
 *.swp
+*.log
