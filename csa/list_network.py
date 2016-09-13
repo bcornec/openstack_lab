@@ -66,7 +66,7 @@ user_subnets = []
 for subnet in conn.network.subnets():
     check = re.match(r'\d+\.1\.(\d+)\.\d+', subnet.cidr)
     if check and 0 < int(check.group(1)) < 20:
-        pprint.pprint(subnet.cidr)
+        # pprint.pprint(subnet.cidr)
         user_subnets.append(subnet.cidr)
 
 # Build a list of available subnets
